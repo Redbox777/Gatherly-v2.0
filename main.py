@@ -4,6 +4,7 @@ from aiogram import Bot, Dispatcher
 from aiogram.contrib.fsm_storage.memory import MemoryStorage
 from config import BOT_TOKEN
 from core.database import init_db
+from telegram.system import register_system_handlers
 
 logging.basicConfig(level=logging.INFO, format="%(asctime)s %(levelname)s %(message)s")
 log = logging.getLogger(__name__)
@@ -15,6 +16,9 @@ dp = Dispatcher(bot, storage=storage)
 
 async def on_startup(dp):
     await init_db()
+    # Регистрация модулей
+    register_system_handlers(dp)
+    log.info("✅ Модуль System зарегистрирован")
     log.info("🚀 Gatherly Life OS v2 запущен")
 
 
